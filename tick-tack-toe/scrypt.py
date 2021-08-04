@@ -1,30 +1,26 @@
-def printing_desk(list_of_desk):
-    for row in list_of_desk:
-        for item in row:
-            print(item, end=' ')
-        print()
-
-
 def printing_desk_2(desk):
+    """функция для вывода поля (списка) и координат"""
     for i in range(len(desk)+1):
         for j in range(len(desk[i-1])+1):
             if i:
                 if j:
                     prt = desk[i-1][j-1]
                 else:
-                    prt = i
+                    prt = i  # вывод координатной сетки
             else:
-                prt = j
+                prt = j  # вывод координатной сетки
             print(prt, end=' ')
         print()
 
 
-def initialization_of_desk(n, m):
-    desk = [['-' for j in range(m)] for i in range(n)]
+def initialization_of_desk(rows, colomns):
+    """ создание двумерного массива (списка списков) необходимого размера"""
+    desk = [['-' for i in range(colomns)] for j in range(rows)]
     return desk
 
 
 def check_win(desk):
+    """ функция проверки на наличие победителя"""
     for i in range(len(desk)-2):
         for j in range(len(desk[i])):
             if desk[i][j] != '-':
@@ -36,10 +32,11 @@ def check_win(desk):
 
 
 print("Добро пожаловать в игру крестики-нолики")
+# ввод размеров поля
 while True:
     try:
-        n, m = list(map(int, input("введите размеры поля через пробел: ").split()))
-        if n < 3 or m < 3 == 0:
+        length, hight = list(map(int, input("введите размеры поля через пробел (формат: длинна высота): ").split()))
+        if length < 3 or hight < 3 == 0:
             raise ValueError("значения должны быть не меньше чем 3")
     except Exception as exc:
         print("вы что-то сделали не так: ", exc)
@@ -47,17 +44,19 @@ while True:
         print("отлично вы справились! Идем дальше.")
         break
 
-lst = initialization_of_desk(n, m)
+# начальные установки, ввод имен
+lst = initialization_of_desk(hight, length)
 print('первыми ходят "крестики"')
 name_x = input('введите имя игрока играющего "крестиками" ')
 name_o = input('введите имя игрока играющего "ноликами" ')
-tuple_names = (name_o, name_x)
-tuple_sighs = ('O', 'X')
+tuple_names = (name_o, name_x)  # кортеж для хранения имен игроков
+tuple_sighs = ('O', 'X')  # кортеж для хранения знаков соответствующих игроков
 turn = 1
 
-while (not check_win(lst)) or (turn > n * m):
+# цикл игры
+while not check_win(lst):
     printing_desk_2(lst)
-    if turn > n * m:
+    if turn > length * hight:
         print("У вас ничья, поля закончились!!!")
         break
     try:
@@ -72,15 +71,6 @@ while (not check_win(lst)) or (turn > n * m):
     else:
         print("отличный ход!")
         turn += 1
-
 else:
     printing_desk_2(lst)
     print(f"после {turn - 1} ходов победил игрок {tuple_names[(turn - 1) % 2]}! Поздравляем!!!")
-
-# printing_desk_2(lst)
-# print(check_win(lst))
-# lst[1][0] = 'o'
-# lst[2][1] = 'o'
-# lst[3][2] = 'o'
-# printing_desk_2(lst)
-# print(check_win(lst))
