@@ -28,8 +28,8 @@ def game_core_v2(number):
 
 
 def game_core_v3(number):
-    """Сначала устанавливаем любое random число, а потом уменьшаем или
-    увеличиваем его в зависимости от того, больше оно или меньше нужного.
+    """Делим нужный отрезок пополам каждую итерацию, меняя пределы в 
+    соответствии с проверкой.
     Функция принимает загаданное число и возвращает число попыток"""
     #  print("загаданное число = ", number)
     count = 0
@@ -39,26 +39,6 @@ def game_core_v3(number):
     while number != predict:
         count += 1
         predict = (maximum + minimum) // 2
-        if number > predict:
-            minimum = predict
-        elif number < predict:
-            maximum = predict
-    #  print("число затраченных попыток : ", count)
-    return count  # выход из цикла, если угадали
-
-
-def game_core_v4(number):
-    """Сначала устанавливаем любое random число, а потом уменьшаем или
-    увеличиваем его в зависимости от того, больше оно или меньше нужного.
-    Функция принимает загаданное число и возвращает число попыток"""
-    #  print("загаданное число = ", number)
-    count = 0
-    predict = None
-    minimum = 1
-    maximum = 101
-    while number != predict:
-        count += 1
-        predict = np.random.randint(minimum, maximum)
         if number > predict:
             minimum = predict
         elif number < predict:
@@ -79,14 +59,11 @@ def score_game(game_core):
     return score
 
 
-# запускаем
+# запускаем первую версию
 score_game(game_core_v1)
 
-# запускаем
+# запускаем вторую версию
 score_game(game_core_v2)
 
-# запускаем
+# запускаем третью версию
 score_game(game_core_v3)
-
-# запускаем
-score_game(game_core_v4)
